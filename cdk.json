@@ -1,0 +1,50 @@
+{
+  "app": "npx ts-node --prefer-ts-exts bin/earthquake-threads-bot.ts",
+  "watch": {
+    "include": [
+      "**"
+    ],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "**/*.d.ts",
+      "**/*.js",
+      "tsconfig.json",
+      "package*.json",
+      "yarn.lock",
+      "node_modules",
+      "test"
+    ]
+  },
+  "context": {
+    "@aws-cdk/aws-apigateway/stage-name-fallback": true,
+    "@aws-cdk/aws-cognito/user-pool-enable-lambda-custom-resource-layer": true,
+    "@aws-cdk/aws-ec2/instance-profile-resource-name": true,
+    "@aws-cdk/aws-ecs/arn-format-includes-cluster-name": true,
+    "@aws-cdk/aws-ecs/enable-url-form-encoded-check": true,
+    "@aws-cdk/aws-iam/minimize-policies": true,
+    "@aws-cdk/aws-kms/alias-name-required": true,
+    "@aws-cdk/aws-lambda/recognize-lambda-handler-code-asset": true,
+    "@aws-cdk/aws-logs/enable-stream-name-log-group": true,
+    "@aws-cdk/aws-s3/grant-readwrite-tags": true,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/core:target-partitions": [
+      "aws",
+      "aws-cn"
+    ],
+    "@aws-cdk/aws-apigateway/disable-default-endpoint": true,
+    "@aws-cdk/aws-ecs/disable-service-view-scaling-changenotifiers": true,
+    "@aws-cdk/aws-iam/remove-instance-profile-properties": true,
+    "@aws-cdk/aws-s3/grant-readwrite-tagging": true,
+    "@aws-cdk/aws-secretsmanager/use- ArnComplete-for-Secret": true,
+    "@aws-cdk/aws-stepfunctions/enable-foreach-state-transition-to-next": true,
+    "@aws-cdk/aws-lambda/enable-url-routing": true,
+    "@aws-cdk/aws-cloudfront/default-security-policy-tls-v1.2_2021": true,
+    "@aws-cdk-containers/ecs-service-extensions:enable-ecs-service-extensions": true,
+    "@aws-cdk/aws-ec2/restrict-default-security-group": true,
+    "@aws-cdk/aws-apigateway/requestvalidator-cdk-attribute": true,
+    "@aws-cdk/aws-rds/prevent-circuit-breaker-traps": true,
+    "@aws-cdk/aws-dataSync/enable-fsx-lustre-source-capability": true,
+    "@aws-cdk/core:newStyleStackSynthesis": true
+  }
+}
