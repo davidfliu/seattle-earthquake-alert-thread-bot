@@ -1,0 +1,53 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main # Trigger on push to the main branch
+  pull_request:
+    branches:
+      - main # Trigger on pull requests to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Or the Node.js version you prefer
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./earthquake-threads-bot # Ensure command runs in the project directory
+
+      - name: Install AWS CDK globally
+        run: npm install -g aws-cdk # Install CDK CLI in the runner environment
+        working-directory: ./earthquake-threads-bot # Ensure command runs in the project directory
+
+      # TODO: Add steps for running unit and integration tests here
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/GitHubActionsDeployRole # Replace with your AWS Account ID and IAM Role name
+          aws-region: YOUR_AWS_REGION # Replace with your desired AWS Region
+
+      - name: CDK Synth
+        run: cdk synth
+        working-directory: ./earthquake-threads-bot # Ensure command runs in the project directory
+
+      - name: CDK Deploy
+        run: cdk deploy --require-approval never # Use --require-approval never for automated deployment
+        working-directory: ./earthquake-threads-bot # Ensure command runs in the project directory
+        env:
+          # Pass environment variables needed by your CDK stack if any
+          # EXAMPLE_VAR: ${{ secrets.EXAMPLE_SECRET }}
+          CDK_DEFAULT_ACCOUNT: YOUR_AWS_ACCOUNT_ID # Replace with your AWS Account ID
+          CDK_DEFAULT_REGION: YOUR_AWS_REGION # Replace with your desired AWS Region
+
+      # TODO: Add steps for post-deployment actions or notifications if needed
