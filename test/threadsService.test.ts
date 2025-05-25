@@ -69,6 +69,47 @@ describe('threadsService', () => {
     expect(mockedAxios.post).toHaveBeenCalledTimes(1);
   });
 
+  test('postThread does not refresh token if not expired', async () => {
+    const message = 'Test earthquake alert!';
+    const mockUserId = 'YOUR_USER_ID';
+
+    // Mock initial token retrieval to return a valid, not-expired token
+    const validTokens = {
+      accessToken: 'valid_access_token',
+      refreshToken: 'valid_refresh_token',
+      expiresIn: 3600, // 1 hour
+      lastRefreshed: Date.now() - 1000, // Last refreshed just a second ago
+    };
+     mockedSecretsManagerClientSend.mockResolvedValueOnce({ // First call: return valid token
+      SecretString: JSON.stringify(validTokens),
+    });
+
+    // Mock a successful Threads API post response
+    mockedAxios.post.mockResolvedValue({ data: { id: 'thread_id_789' } });
+
+    await postThread(message);
+
+    // Expect Secrets Manager to be called only once (to get the token)
+    expect(mockedGetSecretValueCommand).toHaveBeenCalledWith({
+        SecretId: 'EarthquakeThreadsBotThreadsTokens'
+    });
+    expect(mockedSecretsManagerClientSend).toHaveBeenCalledTimes(1);
+    expect(mockedPutSecretValueCommand).not.toHaveBeenCalled(); // Should not attempt to save a new token
+
+    // Expect axios.post to be called with the valid access token
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      `https://graph.threads.net/v1.0/${mockUserId}/threads`,
+      { text: message },
+      {
+        headers: {
+          Authorization: 'Bearer valid_access_token', // Should use the valid token
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+  });
+
   test('postThread refreshes token if expired', async () => {
     const message = 'Test earthquake alert!';
     const mockUserId = 'YOUR_USER_ID';

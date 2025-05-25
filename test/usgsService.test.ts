@@ -52,6 +52,21 @@ describe('usgsService', () => {
     expect(filteredEarthquakes.map(e => e.id)).toEqual(['us7000c6cy', 'us7000c6cz']);
   });
 
+  test('fetchEarthquakes handles empty features array', async () => {
+    const mockApiResponse = {
+      data: {
+        features: [],
+      },
+    };
+
+    mockedAxios.get.mockResolvedValue(mockApiResponse);
+
+    const filteredEarthquakes = await fetchEarthquakes();
+
+    expect(filteredEarthquakes.length).toBe(0);
+    expect(filteredEarthquakes).toEqual([]);
+  });
+
   test('fetchEarthquakes handles API errors', async () => {
     const mockError = new Error('Failed to fetch data');
     mockedAxios.get.mockRejectedValue(mockError);

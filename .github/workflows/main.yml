@@ -34,8 +34,9 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/GitHubActionsDeployRole # Replace with your AWS Account ID and IAM Role name
-          aws-region: YOUR_AWS_REGION # Replace with your desired AWS Region
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2 # Replace with your desired AWS Region
 
       - name: CDK Synth
         run: cdk synth
@@ -47,7 +48,7 @@ jobs:
         env:
           # Pass environment variables needed by your CDK stack if any
           # EXAMPLE_VAR: ${{ secrets.EXAMPLE_SECRET }}
-          CDK_DEFAULT_ACCOUNT: YOUR_AWS_ACCOUNT_ID # Replace with your AWS Account ID
-          CDK_DEFAULT_REGION: YOUR_AWS_REGION # Replace with your desired AWS Region
+          CDK_DEFAULT_ACCOUNT: 618188262384 # Replace with your AWS Account ID
+          CDK_DEFAULT_REGION: us-west-2
 
       # TODO: Add steps for post-deployment actions or notifications if needed

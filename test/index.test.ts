@@ -106,6 +106,20 @@ describe('Lambda Handler', () => {
     expect(mockedRecordEarthquakeAsPosted).toHaveBeenCalledTimes(1);
   });
 
+  test('handler handles empty earthquake list gracefully', async () => {
+    mockedFetchEarthquakes.mockResolvedValue([]); // Mock empty list
+
+    await handler({}); // Invoke the handler with an empty event
+
+    // Expect fetchEarthquakes to be called
+    expect(mockedFetchEarthquakes).toHaveBeenCalledTimes(1);
+
+    // No other service functions should be called
+    expect(mockedHasEarthquakeBeenPosted).not.toHaveBeenCalled();
+    expect(mockedPostThread).not.toHaveBeenCalled();
+    expect(mockedRecordEarthquakeAsPosted).not.toHaveBeenCalled();
+  });
+
   // Note: Error handling for postThread is done within the loop in the handler,
   // allowing other earthquakes to be processed even if one post fails.
   // This is tested implicitly in the main test case where 'posted-quake-1' is skipped.
