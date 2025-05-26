@@ -23,11 +23,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: ./earthquake-threads-bot # Ensure command runs in the project directory
 
       - name: Install AWS CDK globally
         run: npm install -g aws-cdk # Install CDK CLI in the runner environment
-        working-directory: ./earthquake-threads-bot # Ensure command runs in the project directory
 
       # TODO: Add steps for running unit and integration tests here
 
@@ -40,11 +38,9 @@ jobs:
 
       - name: CDK Synth
         run: cdk synth
-        working-directory: ./earthquake-threads-bot # Ensure command runs in the project directory
 
       - name: CDK Deploy
         run: cdk deploy --require-approval never # Use --require-approval never for automated deployment
-        working-directory: ./earthquake-threads-bot # Ensure command runs in the project directory
         env:
           # Pass environment variables needed by your CDK stack if any
           # EXAMPLE_VAR: ${{ secrets.EXAMPLE_SECRET }}

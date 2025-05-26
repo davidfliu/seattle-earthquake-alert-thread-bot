@@ -8,6 +8,7 @@
 *   Initial code for USGS data fetching, Threads API interaction, and DynamoDB state management added.
 *   Initial unit tests added.
 *   Basic GitHub Actions workflow file set up and configured for AWS authentication and CDK deployment using an IAM user and GitHub Secrets.
+*   **Corrected the working directory path in the GitHub Actions workflow file (`.github/workflows/main.yml`) to fix "No such file or directory" error.**
 *   Manual OAuth 2.0 authorization flow for Threads API completed.
 *   Long-lived access token and user ID obtained and stored in AWS Secrets Manager.
 *   Threads API token retrieval and refresh logic implemented in `threadsService.ts`.

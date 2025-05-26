@@ -11,6 +11,7 @@ Obtained and stored the long-lived access token and user ID in AWS Secrets Manag
 Updated `threadsService.ts` to retrieve tokens and the client secret from Secrets Manager and implement token refresh logic.
 Removed hardcoded Threads App Secret from `threadsService.ts`.
 Set up the GitHub Actions CI/CD pipeline with AWS using an IAM user and GitHub Secrets.
+**Corrected the working directory path in the GitHub Actions workflow file (`.github/workflows/main.yml`) to fix "No such file or directory" error.**
 Implemented the core bot logic in `usgsService.ts`, `stateService.ts`, and `index.ts`.
 Defined the necessary AWS resources in the CDK stack (`lib/earthquake-threads-bot-stack.ts`).
 Added initial unit and integration tests for the core services and handler.
