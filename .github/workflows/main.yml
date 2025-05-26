@@ -29,6 +29,9 @@ jobs:
 
       # TODO: Add steps for running unit and integration tests here
 
+      - name: Build TypeScript
+        run: npm run build # Compile TypeScript code and create the 'dist' directory
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
