@@ -12,6 +12,9 @@ Updated `threadsService.ts` to retrieve tokens and the client secret from Secret
 Removed hardcoded Threads App Secret from `threadsService.ts`.
 Set up the GitHub Actions CI/CD pipeline with AWS using an IAM user and GitHub Secrets.
 **Corrected the working directory path in the GitHub Actions workflow file (`.github/workflows/main.yml`) to fix "No such file or directory" error.**
+**Added a TypeScript build step to the GitHub Actions workflow file (`.github/workflows/main.yml`) to fix "Cannot find asset" error during `cdk synth`.**
+**Added a "build" script to `package.json` to enable the TypeScript build step in the GitHub Actions workflow.**
+**Configured `tsconfig.json` to output compiled JavaScript files to the `dist` directory.**
 Implemented the core bot logic in `usgsService.ts`, `stateService.ts`, and `index.ts`.
 Defined the necessary AWS resources in the CDK stack (`lib/earthquake-threads-bot-stack.ts`).
 Added initial unit and integration tests for the core services and handler.
