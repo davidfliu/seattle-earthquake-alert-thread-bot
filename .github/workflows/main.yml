@@ -32,6 +32,12 @@ jobs:
       - name: Build TypeScript
         run: npm run build # Compile TypeScript code and create the 'dist' directory
 
+      - name: Debug directory structure
+        run: |
+          ls -la
+          find . -name "dist" -type d
+          ls -la dist/ || echo "dist directory not found"
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
